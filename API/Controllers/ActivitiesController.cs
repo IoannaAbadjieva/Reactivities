@@ -1,32 +1,32 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Infrastructure.Data;
-using Infrastructure.Data.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-
 namespace API.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Core;
+    using Infrastructure.Data.Models;
+    using Microsoft.AspNetCore.Mvc;
+
     public class ActivitiesController : BaseApiController
     {
-        private readonly ReactivitiesContext context;
-        public ActivitiesController(ReactivitiesContext _context)
+        private readonly ActivityService actvitiesService;
+
+
+        public ActivitiesController(ActivityService _actvitiesService)
         {
-            context = _context;
+            actvitiesService = _actvitiesService;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Activity>>> GetActivities()
         {
-            return await context.Activities.ToArrayAsync();
+            return await actvitiesService.GetActivities();
         }
 
         [HttpGet("{id}")]
-        public async Task<Activity> GetActivity(Guid id)
+        public async Task<ActionResult<Activity>> GetActivity(Guid id)
         {
-            return await context.Activities.FindAsync(id);
+            return await actvitiesService.GetActivity(id);
         }
 
     }
