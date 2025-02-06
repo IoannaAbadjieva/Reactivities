@@ -3,9 +3,9 @@ namespace Persistence
     using Domain;
     using Microsoft.EntityFrameworkCore;
 
-    public class DataContext : DbContext
+    public class ReactivitiesContext : DbContext
     {
-        public DataContext(DbContextOptions options) : base(options)
+        public ReactivitiesContext(DbContextOptions options) : base(options)
         {
 
         }
