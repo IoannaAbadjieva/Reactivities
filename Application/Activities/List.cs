@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Application.Core;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -11,18 +8,18 @@ namespace Application.Activities
 {
     public class List
     {
-        public class Query : IRequest<Activity[]> { }
+        public class Query : IRequest<Result<Activity[]>> { }
 
-        public class Handler : IRequestHandler<Query, Activity[]>
+        public class Handler : IRequestHandler<Query, Result<Activity[]>>
         {
             private readonly ReactivitiesContext context;
             public Handler(ReactivitiesContext _context)
             {
                 context = _context;
             }
-            public async Task<Activity[]> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<Activity[]>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return await context.Activities.ToArrayAsync();
+                return Result<Activity[]>.Success(await context.Activities.ToArrayAsync());
             }
         }
     }
